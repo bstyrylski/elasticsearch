@@ -2,15 +2,20 @@
 <div>
     <h2>Basic search</h2>
     <div>
-        <oj-input-text id="text-input" value="{{searchPhrase}}" placeholder="Enter search terms"></oj-input-text>
+        <oj-input-text id="searchPhrase" value="{{searchPhrase}}" placeholder="Enter search terms"></oj-input-text>
+        <oj-button id="searchButton" on-click="[[searchButtonClick]]">Search</oj-button>
     </div>
     <div class="oj-flex">
         <oj-table id="results" 
                   data="[[results]]" 
                   columns-default='{"sortable": "none"}' 
-                  columns='[{"headerText": "id", 
-                    "field": "id"},
-                    {"headerText": "Score", 
-                    "field": "score"}]' />
+                  columns='[{"headerText": "Job Code", 
+                    "field": "jobCode"},
+                    {"headerText": "Job Name", 
+                    "field": "jobName"},
+                    {"headerText": "Job Family Name", 
+                    "field": "jobFamilyName"},
+                    {"headerText": "Job Function Code", 
+                    "field": "jobFunctionCode"}]' />
     </div>
 </div>
