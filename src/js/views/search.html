@@ -2,8 +2,10 @@
 <div>
     <h2>Basic search</h2>
     <div>
-        <oj-input-text id="searchPhrase" value="{{searchPhrase}}" placeholder="Enter search terms"></oj-input-text>
-        <oj-button id="searchButton" on-click="[[searchButtonClick]]">Search</oj-button>
+        <input id="searchPhrase" 
+               class="oj-inputtext-input" 
+               placeholder="Enter search phrase..."
+               data-bind="value: searchPhrase, valueUpdate: 'afterkeydown'" />
     </div>
     <div class="oj-flex">
         <oj-table id="results" 

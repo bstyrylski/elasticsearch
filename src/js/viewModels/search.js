@@ -15,16 +15,20 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
     return function searchContentViewModel() {
         var self = this;
 
-        self.searchPhrase = ko.observable("");
+        self.searchPhrase = ko.observable();
+        
+        self.throttledSearchPhrase = ko.computed(self.searchPhrase)
+                            .extend({ throttle: 400 });
+        
         self.jobs = ko.observableArray();
         
-        self.searchButtonClick = function(event) {
+        self.throttledSearchPhrase.subscribe(function(value) {
             var payload = {
                 query: {
                     bool: {
                         must: [{
                                 multi_match: {
-                                    query: self.searchPhrase(),
+                                    query: value,
                                     fields: ["JobCode", "Name", "JobFamilyName", "JobFunctionCode"]
                                 }
                             }
@@ -46,7 +50,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
                         });
                     });
                 });
-        }
+
+        });
 
         self.results = new oj.ArrayTableDataSource(self.jobs, {idAttribute: "jobCode"});
     }
