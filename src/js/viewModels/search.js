@@ -15,30 +15,32 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
     return function searchContentViewModel() {
         var self = this;
 
-        self.searchPhrase = ko.observable("");
+        self.searchPhrase = ko.observable("Manager");
         self.jobs = ko.observableArray();
-
-        $.post("http://localhost:1337/slc12qen.us.oracle.com:9200/jobs/_search", JSON.stringify({
+        
+        var payload = {
             query: {
                 bool: {
                     must: [{
                             multi_match: {
-                                query: "Manager",
+                                query: self.searchPhrase(),
                                 fields: ["JobCode", "Name", "JobFamilyName", "JobFunctionCode"]
                             }
                         }
                     ]
                 }
             }
-        }))
-                .done(function (searchResult) {
-                    $.each(searchResult.hits.hits, function () {
-                        self.jobs.push({
-                            id: this._id,
-                            score: this._score
-                        });
+        };
+
+        $.post("http://localhost:1337/slc12qen.us.oracle.com:9200/jobs/_search", JSON.stringify(payload))
+            .done(function (searchResult) {
+                $.each(searchResult.hits.hits, function () {
+                    self.jobs.push({
+                        id: this._id,
+                        score: this._score
                     });
                 });
+            });
 
         self.results = new oj.ArrayTableDataSource(self.jobs, {idAttribute: "id"});
     }
