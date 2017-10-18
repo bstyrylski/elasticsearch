@@ -7,6 +7,7 @@
                data-bind="value: searchPhrase, valueUpdate: 'afterkeydown'" />
     </div>
     <div style="padding-top: 20px; margin-bottom: 20px">
+        <pre data-bind="text: payload" />
         <div>Time took: <span data-bind="text: timeTook" /> ms</div>
         <div>Total hits: <span data-bind="text: totalHits" /></div>
     </div>

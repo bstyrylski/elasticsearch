@@ -23,9 +23,11 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
         self.jobs = ko.observableArray();
         self.timeTook = ko.observable("0");
         self.totalHits = ko.observable("0");
+        self.payload = ko.observable();
         
         self.throttledSearchPhrase.subscribe(function(value) {
             var payload = {
+                size: 100,
                 query: {
                     bool: {
                         must: [{
@@ -38,8 +40,10 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
                     }
                 }
             };
+            
+            self.payload(JSON.stringify(payload, null, 2));
 
-            $.post("http://localhost:1337/slc12qen.us.oracle.com:9200/jobs/_search?size=500", JSON.stringify(payload))
+            $.post("http://localhost:1337/slc12qen.us.oracle.com:9200/jobs/_search", self.payload())
                 .done(function (searchResult) {
                     self.jobs([]);
                     self.timeTook(searchResult.took);

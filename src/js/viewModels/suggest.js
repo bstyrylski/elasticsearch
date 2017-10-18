@@ -24,6 +24,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
         self.timeTook = ko.observable("0");
         self.totalHits = ko.observable("0");
         
+        self.payload = ko.observable();
+        
         self.throttledSearchPhrase.subscribe(function(value) {
             var payload = {
                 _source: ["Name"],
@@ -34,12 +36,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
             payload.suggest["name-suggest"] = {
                 prefix: value,
                 completion: {
-                    size: 500,
+                    size: 100,
                     field: "Name-Completion"
                 }
             };
+            
+            self.payload(JSON.stringify(payload, null, 2));
 
-            $.post("http://localhost:1337/slc12qen.us.oracle.com:9200/jobs/_search", JSON.stringify(payload))
+            $.post("http://localhost:1337/slc12qen.us.oracle.com:9200/jobs/_search", self.payload())
                 .done(function (searchResult) {
                     self.jobs([]);
                     self.timeTook(searchResult.took);
