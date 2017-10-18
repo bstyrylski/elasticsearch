@@ -19,7 +19,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
         self.searchPhrase = ko.observable();
         self.set = ko.observable();
         self.sets = ko.observableArray([
-            {value: '', label: 'None set'},
+            {value: '', label: 'None set chosen'},
             {value: 'common', label: 'COMMON'},
             {value: 'setw1', label: 'SMALL'},
             {value: 'setw2', label: 'MEDIUM'},
