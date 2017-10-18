@@ -13,7 +13,7 @@ $ npm -g install @oracle/ojet-cli
 * Clone the project
 
 ```
-$ git clone https://github.com/oracle/ojet-cli.git
+$ git clone https://github.com/bstyrylski/elasticsearch.git
 ```
 
 * Install corsproxy
