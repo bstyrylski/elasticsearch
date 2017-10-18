@@ -5,3 +5,13 @@
     Description:
         This is where any of your application specific styles should be included
 */
+
+pre {
+    height: auto;
+    max-height: 200px;
+    overflow: auto;
+    background-color: #fef3ce;
+    word-break: normal !important;
+    word-wrap: normal !important;
+    white-space: pre !important;
+}​

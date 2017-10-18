@@ -1,6 +1,10 @@
 <h1>Search</h1>
 <div>
-    <div>
+    <div>     
+        <oj-select-one id="basicSelect" 
+                       options="[[sets]]" 
+                       value="{{set}}"
+                       on-value-changed="{{triggerSearch}}" />
         <input id="searchPhrase" 
                class="oj-inputtext-input" 
                placeholder="Enter search phrase..."
@@ -25,6 +29,8 @@
                     "field": "jobFamilyName"},
                     {"headerText": "Job Function Code", 
                     "field": "jobFunctionCode"},
+                    {"headerText": "Set Code", 
+                    "field": "setCode"},
                     {"headerText": "Score", 
                     "field": "score"}]' />
     </div>
