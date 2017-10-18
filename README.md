@@ -33,6 +33,7 @@ $ corsproxy
 * Start the app
 
 ```
+$ cd elasticsearch
 $ ojet serve
 ```
 That's it, your browser should start and open http://localhost:8000
