@@ -5,14 +5,14 @@
  */
 
 /**
- * search module
+ * suggest module
  */
 define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarraytabledatasource'
 ], function (oj, ko) {
     /**
      * The view model for the main content view template
      */
-    return function searchContentViewModel() {
+    return function suggestContentViewModel() {
         var self = this;
 
         self.searchPhrase = ko.observable();
@@ -26,32 +26,29 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
         
         self.throttledSearchPhrase.subscribe(function(value) {
             var payload = {
-                query: {
-                    bool: {
-                        must: [{
-                                multi_match: {
-                                    query: value,
-                                    fields: ["JobCode", "Name", "JobFamilyName", "JobFunctionCode"]
-                                }
-                            }
-                        ]
-                    }
+                _source: ["Name"],
+                suggest: {
+                }
+            };
+            
+            payload.suggest["name-suggest"] = {
+                prefix: value,
+                completion: {
+                    size: 500,
+                    field: "Name-Completion"
                 }
             };
 
-            $.post("http://localhost:1337/slc12qen.us.oracle.com:9200/jobs/_search?size=500", JSON.stringify(payload))
+            $.post("http://localhost:1337/slc12qen.us.oracle.com:9200/jobs/_search", JSON.stringify(payload))
                 .done(function (searchResult) {
                     self.jobs([]);
                     self.timeTook(searchResult.took);
-                    self.totalHits(searchResult.hits.total);
+                    self.totalHits(searchResult.suggest["name-suggest"][0].options.length);
                     
-                    $.each(searchResult.hits.hits, function () {
+                    $.each(searchResult.suggest["name-suggest"][0].options, function () {
                         self.jobs.push({
                             id: this._id,
-                            jobCode: this._source.JobCode,
                             jobName: this._source.Name,
-                            jobFamilyName: this._source.JobFamilyName,
-                            jobFunctionCode: this._source.JobFunctionCode,
                             score: this._score
                         });
                     });
