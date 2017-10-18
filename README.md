@@ -19,7 +19,7 @@ $ git clone https://github.com/oracle/ojet-cli.git
 * Install corsproxy
 
 ```
-$ npm install -g corsproxy
+$ npm -g install corsproxy
 ```
 
 ## Starting the app
