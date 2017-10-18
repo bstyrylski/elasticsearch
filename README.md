@@ -24,6 +24,7 @@ $ npm -g install corsproxy
 
 ## Starting the app
 
+* Make sure your on corporate VPN
 * Start corsproxy
 
 ```
