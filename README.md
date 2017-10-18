@@ -35,4 +35,4 @@ $ corsproxy
 ```
 $ ojet serve
 ```
-That's it your browser should start and open http://localhost:8000
+That's it, your browser should start and open http://localhost:8000
