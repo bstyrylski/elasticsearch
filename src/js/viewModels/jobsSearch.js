@@ -16,15 +16,24 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
     return function jobsSearchContentViewModel() {
         var self = this;
 
-        self.searchPhrase = ko.observable();
+        self.searchPhrase = ko.observable()
+        
         self.set = ko.observable();
         self.sets = ko.observableArray([
-            {value: '', label: 'None set chosen'},
+            {value: '', label: 'All'},
             {value: 'common', label: 'COMMON'},
             {value: 'setw1', label: 'SMALL'},
             {value: 'setw2', label: 'MEDIUM'},
             {value: 'setw3', label: 'LARGE'}
           ]);
+          
+         self.fields = ko.observableArray([
+            {value: 'JobCode', label: 'Job Code'},
+            {value: 'Name', label: 'Job Name'},
+            {value: 'JobFamilyName', label: 'Job Family Name'},
+            {value: 'JobFunctionCode', label: 'Job Function Code'}
+          ]);
+          self.selectedFields = ko.observableArray(["JobCode", "Name", "JobFamilyName", "JobFunctionCode"]);
         
         self.throttledSearchPhrase = ko.computed(self.searchPhrase)
                             .extend({ throttle: 300 });
@@ -42,7 +51,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
                         must: [{
                                 query_string: {
                                     query: value + "*",
-                                    fields: ["JobCode", "Name", "JobFamilyName", "JobFunctionCode"]
+                                    fields: self.selectedFields()
                                 }
                             }
                         ]
