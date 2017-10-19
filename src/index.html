@@ -91,21 +91,6 @@
               <span role="img" class="oj-icon demo-oracle-icon" title="Oracle Logo" alt="Oracle Logo"></span>
               <h1 class="oj-sm-only-hide oj-web-applayout-header-title" title="Application Name" data-bind="text: appName"></h1>
             </div>
-            <div class="oj-flex-bar-end">
-              <!-- Responsive Toolbar -->
-              <oj-toolbar>
-                <oj-menu-button id="userMenu" display="[[smScreen() ? 'icons' : 'all']]" chroming="half">
-                  <span data-bind="text: userLogin"></span>
-                  <span slot="endIcon" data-bind="css: smScreen() ? 'oj-icon demo-appheader-avatar' : 'oj-component-icon oj-button-menu-dropdown-icon'"></span>
-                  <oj-menu id="menu1" slot="menu" style="display:none">
-                    <oj-option id="pref" value="pref">Preferences</oj-option>
-                    <oj-option id="help" value="help">Help</oj-option>
-                    <oj-option id="about" value="about">About</oj-option>
-                    <oj-option id="out" value="out">Sign Out</oj-option>
-                  </oj-menu>
-                </oj-menu-button>
-              </oj-toolbar>
-            </div>
           </div>
           <div role="navigation" class="oj-web-applayout-max-width oj-web-applayout-navbar">
             <oj-navigation-list class="oj-sm-only-hide oj-md-condense oj-md-justify-content-flex-end"
