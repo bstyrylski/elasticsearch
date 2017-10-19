@@ -8,7 +8,7 @@
  * jobsSearch module
  */
 define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarraytabledatasource',
-    'ojs/ojselectcombobox', 'ojs/ojcollapsible'
+    'ojs/ojselectcombobox', 'ojs/ojcollapsible', 'ojs/ojslider'
 ], function (oj, ko) {
     /**
      * The view model for the main content view template
@@ -27,13 +27,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
             {value: 'setw3', label: 'LARGE'}
           ]);
           
-         self.fields = ko.observableArray([
+        self.fields = ko.observableArray([
             {value: 'JobCode', label: 'Job Code'},
             {value: 'Name', label: 'Job Name'},
             {value: 'JobFamilyName', label: 'Job Family Name'},
             {value: 'JobFunctionCode', label: 'Job Function Code'}
           ]);
-          self.selectedFields = ko.observableArray(["JobCode", "Name", "JobFamilyName", "JobFunctionCode"]);
+          
+        self.selectedFields = ko.observableArray(["JobCode", "Name", "JobFamilyName", "JobFunctionCode"]);
         
         self.throttledSearchPhrase = ko.computed(self.searchPhrase)
                             .extend({ throttle: 300 });
@@ -44,6 +45,27 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
         self.payload = ko.observable();
         
         self.search = function(value) {
+            
+            var fields = new Array(); 
+            
+            for (var i = 0; i < self.selectedFields().length; i++) {
+                var fieldName = self.selectedFields()[i];
+                
+                var boost = 0;
+                
+                for (var j = 0; j < self.boosters.length; j++) {
+                    if (self.boosters[j].value == fieldName) {
+                        boost = self.boosters[j].boost();
+                    }
+                }
+                
+                if (boost > 1) {
+                    fieldName = fieldName + "^" + boost;
+                }
+                
+                fields.push(fieldName);
+            }
+           
             var payload = {
                 size: 100,
                 query: {
@@ -51,7 +73,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
                         must: [{
                                 query_string: {
                                     query: value + "*",
-                                    fields: self.selectedFields()
+                                    fields: fields
                                 }
                             }
                         ]
@@ -101,6 +123,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
         }
         
         self.throttledSearchPhrase.subscribe(self.triggerSearch);
+        
+        self.boosters = [
+            {value: 'JobCode', label: 'Job Code', boost: ko.observable(1), triggerSearch: self.triggerSearch},
+            {value: 'Name', label: 'Job Name', boost: ko.observable(1), triggerSearch: self.triggerSearch},
+            {value: 'JobFamilyName', label: 'Job Family Name', boost: ko.observable(1), triggerSearch: self.triggerSearch},
+            {value: 'JobFunctionCode', label: 'Job Function Code', boost: ko.observable(1), triggerSearch: self.triggerSearch}
+        ];
 
         self.results = new oj.ArrayTableDataSource(self.jobs, {idAttribute: "id"});
     }

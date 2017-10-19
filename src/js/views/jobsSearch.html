@@ -15,6 +15,17 @@
             </div>
             <div class="oj-flex"> 
                 <div class="oj-flex-item">
+                    <oj-label for="fieldsSelection">Search fields</oj-label>
+                </div>
+                <div class="oj-flex-item">
+                    <oj-select-many id="fieldsSelection" options="[[fields]]" 
+                                    value="{{selectedFields}}"
+                                    on-value-changed="{{triggerSearch}}" 
+                                    placeholder="Choose fields..." />
+                </div>
+            </div>
+            <div class="oj-flex"> 
+                <div class="oj-flex-item">
                     <oj-label for="searchPhrase">Search phrase</oj-label>
                 </div>
                 <div class="oj-flex-item">
@@ -26,13 +37,22 @@
             </div>
             <div class="oj-flex"> 
                 <div class="oj-flex-item">
-                    <oj-label for="fieldsSelection">Search fields</oj-label>
+                    <oj-label>Boost</oj-label>
                 </div>
-                <div class="oj-flex-item">
-                    <oj-select-many id="fieldsSelection" options="[[fields]]" 
-                                    value="{{selectedFields}}"
-                                    on-value-changed="{{triggerSearch}}" 
-                                    placeholder="Choose fields..." />
+                <div style="padding-top: 30px">
+                    <table data-bind="foreach: boosters">
+                        <tr>
+                            <td>
+                                <span data-bind="text: label" />
+                            </td>
+                            <td style="width: 40px; text-align: center"><span data-bind="text: boost" /></td>
+                            <td>
+                                <oj-slider id="slider" min="1" max="10" step="1" 
+                                           value="{{boost}}"
+                                           on-value-changed="{{triggerSearch}}" />
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>    
