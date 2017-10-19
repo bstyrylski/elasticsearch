@@ -5,15 +5,15 @@
  */
 
 /**
- * search module
+ * jobsSearch module
  */
 define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarraytabledatasource',
-    'ojs/ojselectcombobox'
+    'ojs/ojselectcombobox', 'ojs/ojcollapsible'
 ], function (oj, ko) {
     /**
      * The view model for the main content view template
      */
-    return function searchContentViewModel() {
+    return function jobsSearchContentViewModel() {
         var self = this;
 
         self.searchPhrase = ko.observable();

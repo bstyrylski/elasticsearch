@@ -1,4 +1,4 @@
-<h1>Suggest</h1>
+<h1>Jobs suggest</h1>
 <div>
     <div>
         <input id="searchPhrase" 
@@ -7,9 +7,12 @@
                data-bind="value: searchPhrase, valueUpdate: 'afterkeydown'" />
     </div>
     <div style="padding-top: 20px; margin-bottom: 20px">
-        <pre data-bind="text: payload" />
-        <div>Time took: <span data-bind="text: timeTook" /> ms</div>
-        <div>Total hits: <span data-bind="text: totalHits" /></div>
+        <oj-collapsible id="collapsibleRequestDetails">
+            <h3 slot="header">Request details</h3>
+            <pre data-bind="text: payload" />
+            <div>Time took: <span data-bind="text: timeTook" /> ms</div>
+            <div>Total hits: <span data-bind="text: totalHits" /></div>
+        </oj-collapsible>
     </div>
     <div class="oj-flex">
         <oj-table id="results" 

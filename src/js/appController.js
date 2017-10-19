@@ -20,15 +20,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
        // Router setup
        self.router = oj.Router.rootInstance;
        self.router.configure({
-         'search': {label: 'Search', isDefault: true},
-         'suggest': {label: 'Suggest'}
+         'jobsSearch': {label: 'Jobs search', isDefault: true},
+         'jobsSuggest': {label: 'Jobs suggest'}
        });
       oj.Router.defaults['urlAdapter'] = new oj.Router.urlParamAdapter();
 
       // Navigation setup
       var navData = [
-        {name: 'Search', id: 'search'},
-        {name: 'Suggest', id: 'suggest'}
+        {name: 'Jobs search', id: 'jobsSearch'},
+        {name: 'Jobs suggest', id: 'jobsSuggest'}
       ];
       self.navDataSource = new oj.ArrayTableDataSource(navData, {idAttribute: 'id'});
 
