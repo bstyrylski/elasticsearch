@@ -1,0 +1,65 @@
+<h1>Jobs LOV search</h1>
+<div>
+    <div class="oj-form-layout">
+        <div class="oj-form oj-sm-odd-cols-12 oj-md-odd-cols-4 oj-md-labels-inline oj-form-cols-labels-inline oj-form-cols-max2">  
+            <div class="oj-flex">  
+                <div class="oj-flex-item">
+                    <oj-label for="setSelection">Set</oj-label>
+                </div>
+                <div class="oj-flex-item">
+                    <oj-select-one id="setSelection" 
+                                   options="[[sets]]" 
+                                   value="{{set}}"
+                                   on-value-changed="{{triggerSearch}}" />
+                </div>
+            </div>
+            <div class="oj-flex"> 
+                <div class="oj-flex-item">
+                    <oj-label for="searchPhrase">Search phrase</oj-label>
+                </div>
+                <div class="oj-flex-item">
+                    <input id="searchPhrase" 
+                           class="oj-inputtext-input" 
+                           placeholder="Enter search phrase..."
+                           data-bind="value: searchPhrase, valueUpdate: 'afterkeydown'" />
+                </div>
+            </div>
+            <div class="oj-flex"> 
+                <div class="oj-flex-item">
+                    <oj-label for="fieldsSelection">Search fields</oj-label>
+                </div>
+                <div class="oj-flex-item">
+                    <oj-select-many id="fieldsSelection" options="[[fields]]" 
+                                    value="{{selectedFields}}"
+                                    on-value-changed="{{triggerSearch}}" 
+                                    placeholder="Choose fields..." />
+                </div>
+            </div>
+        </div>    
+    </div>
+ 
+    <div style="padding-top: 20px; margin-bottom: 20px">
+        <oj-collapsible id="collapsibleRequestDetails">
+            <h3 slot="header">Request details</h3>
+            <pre data-bind="text: payload" />
+            <div>Total hits: <span data-bind="text: totalHits" /></div>
+        </oj-collapsible>
+    </div>
+    <div class="oj-flex">
+        <oj-table id="results" 
+                  data="[[results]]" 
+                  columns-default='{"sortable": "none"}' 
+                  columns='[{"headerText": "ID", 
+                    "field": "id"},
+                    {"headerText": "Job Code", 
+                    "field": "jobCode"},
+                    {"headerText": "Job Name", 
+                    "field": "jobName"},
+                    {"headerText": "Job Family Name", 
+                    "field": "jobFamilyName"},
+                    {"headerText": "Job Function Code", 
+                    "field": "jobFunctionCode"},
+                    {"headerText": "Set Code", 
+                    "field": "setCode"}]' />
+    </div>
+</div>
