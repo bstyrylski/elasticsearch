@@ -8,7 +8,7 @@
  * jobsSuggest module
  */
 define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarraytabledatasource', 
-    'ojs/ojcollapsible'
+    'ojs/ojcollapsible', 'ojs/ojprogress'
 ], function (oj, ko) {
     /**
      * The view model for the main content view template
@@ -27,7 +27,15 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
         
         self.payload = ko.observable();
         
+        self.inProgress = ko.observable(0);
+        
+        self.isInProgress = ko.computed(function() {
+            return self.inProgress() > 0;
+        });
+        
         self.throttledSearchPhrase.subscribe(function(value) {
+            self.inProgress(self.inProgress() + 1);
+            
             var payload = {
                 _source: ["Name"],
                 suggest: {
@@ -57,10 +65,13 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
                             score: this._score
                         });
                     });
+                    
+                    self.inProgress(self.inProgress() - 1);
                 });
 
         });
 
         self.results = new oj.ArrayTableDataSource(self.jobs, {idAttribute: "id"});
+        
     }
 });

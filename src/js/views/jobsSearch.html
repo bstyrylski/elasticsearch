@@ -29,10 +29,22 @@
                     <oj-label for="searchPhrase">Search phrase</oj-label>
                 </div>
                 <div class="oj-flex-item">
-                    <input id="searchPhrase" 
-                           class="oj-inputtext-input" 
-                           placeholder="Enter search phrase..."
-                           data-bind="value: searchPhrase, valueUpdate: 'afterkeydown'" />
+                    <table>
+                        <tr>
+                            <td width="400px">
+                                <input id="searchPhrase" 
+                                       class="oj-inputtext-input" 
+                                       placeholder="Enter search phrase..."
+                                       data-bind="value: searchPhrase, valueUpdate: 'afterkeydown'" />
+
+                            </td>
+                            <td>
+                                <div data-bind="visible: isInProgress">
+                                    <oj-progress id="progress" type="circle" value="-1" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
             <div class="oj-flex"> 

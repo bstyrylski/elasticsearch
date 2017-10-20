@@ -8,7 +8,7 @@
  * jobsSearch module
  */
 define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarraytabledatasource',
-    'ojs/ojselectcombobox', 'ojs/ojcollapsible', 'ojs/ojslider'
+    'ojs/ojselectcombobox', 'ojs/ojcollapsible', 'ojs/ojslider', 'ojs/ojprogress'
 ], function (oj, ko) {
     /**
      * The view model for the main content view template
@@ -44,7 +44,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
         self.totalHits = ko.observable("0");
         self.payload = ko.observable();
         
+        self.inProgress = ko.observable(0);
+        
+        self.isInProgress = ko.computed(function() {
+            return self.inProgress() > 0;
+        });
+        
         self.search = function(value) {
+            self.inProgress(self.inProgress() + 1);
             
             var fields = new Array(); 
             
@@ -112,6 +119,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
                             score: this._score
                         });
                     });
+                    
+                    self.inProgress(self.inProgress() - 1);
                 });
 
         }

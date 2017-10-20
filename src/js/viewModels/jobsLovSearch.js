@@ -8,7 +8,7 @@
  * jobsLovSearch module
  */
 define(['ojs/ojcore', 'knockout', 'ojs/ojtable', 'ojs/ojarraytabledatasource',
-    'ojs/ojselectcombobox', 'ojs/ojcollapsible'
+    'ojs/ojselectcombobox', 'ojs/ojcollapsible', 'ojs/ojprogress'
 ], function (oj, ko) {
     /**
      * The view model for the main content view template
@@ -41,8 +41,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojtable', 'ojs/ojarraytabledatasource',
         self.jobs = ko.observableArray();
         self.totalHits = ko.observable("0");
         self.payload = ko.observable();
+        
+        self.inProgress = ko.observable(0);
+        
+        self.isInProgress = ko.computed(function() {
+            return self.inProgress() > 0;
+        });
 
-        self.search = function (value) {        
+        self.search = function (value) {
+            self.inProgress(self.inProgress() + 1);
+            
             var url = "http://localhost:1338/fuscdrmsmc124-fa-ext.us.oracle.com/hcmRestApi/resources/latest/jobsLov?finder=findByWord;pSetId=" + self.set() + ",";
             
             var fields = "";
@@ -76,6 +84,8 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojtable', 'ojs/ojarraytabledatasource',
                                 setCode: this.SetCode
                             });
                         });
+                        
+                        self.inProgress(self.inProgress() - 1);
                     }
             });
 

@@ -1,10 +1,22 @@
 <h1>Jobs suggest</h1>
 <div>
     <div>
-        <input id="searchPhrase" 
-               class="oj-inputtext-input" 
-               placeholder="Enter search phrase..."
-               data-bind="value: searchPhrase, valueUpdate: 'afterkeydown'" />
+        <table>
+            <tr>
+                <td width="400px">
+                    <input id="searchPhrase" 
+                           class="oj-inputtext-input" 
+                           placeholder="Enter search phrase..."
+                           data-bind="value: searchPhrase, valueUpdate: 'afterkeydown'" />
+
+                </td>
+                <td>
+                    <div data-bind="visible: isInProgress">
+                        <oj-progress id="progress" type="circle" value="-1" />
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
     <div style="padding-top: 20px; margin-bottom: 20px">
         <oj-collapsible id="collapsibleRequestDetails">
