@@ -62,7 +62,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojtable', 'ojs/ojarraytabledatasource',
                 }
             }
             
-            url += "pSearchTerms=" + value + ",pFilterAttributes=" + fields + "&limit=100";
+            url += "pSearchTerms=" + value + ",pFilterAttributes=" + fields + "&totalResults=true&limit=100";
 
             self.payload(url);
 
@@ -72,7 +72,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojtable', 'ojs/ojarraytabledatasource',
                 headers: {'Authorization': 'Basic VE0tTUZJVFpJTU1PTlM6V2VsY29tZTE='},
                 success: function(searchResult) {
                         self.jobs([]);
-                        self.totalHits(searchResult.items.length);
+                        self.totalHits(searchResult.totalResults);
 
                         $.each(searchResult.items, function () {
                             self.jobs.push({
