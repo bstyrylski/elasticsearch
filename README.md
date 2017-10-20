@@ -16,19 +16,27 @@ $ npm -g install @oracle/ojet-cli
 $ git clone https://github.com/bstyrylski/elasticsearch.git
 ```
 
-* Install corsproxy
+* Install corsproxy and corsproxy-https
 
 ```
 $ npm -g install corsproxy
+$ npm -g install corsproxy-https
 ```
 
 ## Starting the app
 
 * Make sure you're on corporate VPN
-* Start corsproxy
+* Start corsproxy on port 1337
 
 ```
-$ corsproxy
+$ ~/AppData/Roaming/npm/node_modules/corsproxy/bin/corsproxy
+```
+
+* Start corsproxy-https on port 1338
+
+```
+$ export CORSPROXY_PORT=1338
+$ ~/AppData/Roaming/npm/node_modules/corsproxy-https/bin/corsproxy
 ```
 
 * Start the app

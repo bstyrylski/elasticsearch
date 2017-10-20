@@ -43,7 +43,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojtable', 'ojs/ojarraytabledatasource',
         self.payload = ko.observable();
 
         self.search = function (value) {        
-            var url = "http://localhost:1337/fuscdrmsmc124-fa-ext.us.oracle.com/hcmRestApi/resources/latest/jobsLov?finder=findByWord;pSetId=" + self.set() + ",";
+            var url = "http://localhost:1338/fuscdrmsmc124-fa-ext.us.oracle.com/hcmRestApi/resources/latest/jobsLov?finder=findByWord;pSetId=" + self.set() + ",";
             
             var fields = "";
             
