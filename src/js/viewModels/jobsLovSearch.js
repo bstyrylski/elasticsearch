@@ -39,8 +39,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojtable', 'ojs/ojarraytabledatasource',
                 .extend({throttle: 300});
 
         self.jobs = ko.observableArray();
+        self.timeTookOverall = ko.observable(0);
         self.totalHits = ko.observable("0");
-        self.payload = ko.observable();
+        self.payload = ko.observable("Hey, make some search first!");
         
         self.inProgress = ko.observable(0);
         
@@ -51,7 +52,7 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojtable', 'ojs/ojarraytabledatasource',
         self.search = function (value) {
             self.inProgress(self.inProgress() + 1);
             
-            var url = "http://localhost:1338/fuscdrmsmc124-fa-ext.us.oracle.com/hcmRestApi/resources/latest/jobsLov?finder=findByWord;pSetId=" + self.set() + ",";
+            var url = "fuscdrmsmc124-fa-ext.us.oracle.com/hcmRestApi/resources/latest/jobsLov?finder=findByWord;pSetId=" + self.set() + ",";
             
             var fields = "";
             
@@ -64,13 +65,18 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojtable', 'ojs/ojarraytabledatasource',
             
             url += "pSearchTerms=" + value + ",pFilterAttributes=" + fields + "&totalResults=true&limit=100";
 
-            self.payload(url);
+            self.payload("GET https://" + url);
+            
+            url = "http://localhost:1338/" + url;
 
+            var responseTime = Date.now();
             $.ajax({
                 url: url,
                 type: 'GET',
                 headers: {'Authorization': 'Basic VE0tTUZJVFpJTU1PTlM6V2VsY29tZTE='},
                 success: function(searchResult) {
+                        self.timeTookOverall(Date.now() - responseTime);
+                    
                         self.jobs([]);
                         self.totalHits(searchResult.totalResults);
 

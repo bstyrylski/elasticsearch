@@ -41,8 +41,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
         
         self.jobs = ko.observableArray();
         self.timeTook = ko.observable("0");
+        self.timeTookOverall = ko.observable(0);
         self.totalHits = ko.observable("0");
-        self.payload = ko.observable();
+        self.payload = ko.observable("Hey, make some search first!");
         
         self.inProgress = ko.observable(0);
         
@@ -100,10 +101,16 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojinputtext', 'ojs/ojtable', 'ojs/ojarray
                 }
             }
             
-            self.payload(JSON.stringify(payload, null, 2));
+            var url = "slc12qen.us.oracle.com:9200/jobs/_search";
+            self.payload("POST http://" + url + "\n\n" + JSON.stringify(payload, null, 2));
 
-            $.post("http://localhost:1337/slc12qen.us.oracle.com:9200/jobs/_search", self.payload())
+            url = "http://localhost:1337/" + url;
+
+            var responseTime = Date.now();
+            $.post(url, JSON.stringify(payload))
                 .done(function (searchResult) {
+                    self.timeTookOverall(Date.now() - responseTime);
+            
                     self.jobs([]);
                     self.timeTook(searchResult.took);
                     self.totalHits(searchResult.hits.total);

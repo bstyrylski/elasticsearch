@@ -74,9 +74,12 @@
         <oj-collapsible id="collapsibleRequestDetails">
             <h3 slot="header">Request details</h3>
             <pre data-bind="text: payload" />
-            <div>Time took: <span data-bind="text: timeTook" /> ms</div>
-            <div>Total hits: <span data-bind="text: totalHits" /></div>
         </oj-collapsible>
+        <div class="oj-panel">
+            <div class="oj-flex-item oj-margin">Overall response time: <span data-bind="text: timeTookOverall" style="font-size: larger; font-weight: bold" /> ms</div>
+            <div class="oj-flex-item oj-margin">Search processing time: <span data-bind="text: timeTook" style="font-size: larger; font-weight: bold" /> ms</div>
+            <div class="oj-flex-item oj-margin">Total hits: <span data-bind="text: totalHits" style="font-size: larger; font-weight: bold" /></div>
+        </div>
     </div>
     <div class="oj-flex">
         <oj-table id="results" 
